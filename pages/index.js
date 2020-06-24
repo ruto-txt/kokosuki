@@ -1,28 +1,42 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Layout from '../components/layout'
+import Panels from '../components/panels.js'
 
 export default function Home(){
     return (
-    <div className="container">
+    <Layout>
         <Head>
             <title>ここすきチェッカー</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <header>
-            <h1>ここすきチェッカー</h1>
+            <h1 className="title">ここすきチェッカー</h1>
         </header>
         <main>
-            <h2>なんかやろうぜ</h2>
+            <h2>なんか書く</h2>
             <Link href="/damii"><a>＞ダミーリンク＜</a></Link>
-            <div>メインのpanel</div>
-            <div>解説文</div>
-            <div>
-                プレビューエリア
-                <div>プレビュー</div>
-                <div>プレビュー</div>
-            </div>
-            <div>シェアエリア</div>
+            <Panels>メインのpanel</Panels>
+            <section>
+                <p>プレビューエリア</p>
+                <div id="preview1">
+                    <span>プレビュー</span>
+                    <div>↑</div><div>↓</div>
+                </div>
+                <div id="preview2">
+                    <span>プレビュー</span>
+                    <div>↑</div><div>↓</div>
+                </div>
+            </section>
+            <div>シェアボタンエリア</div>
         </main>
         <footer>フッター</footer>
-    </div>)
-}
+    
+    <style jsx>{`
+    .title{
+        text-align: center;
+    }
+    `}
+    </style>
+    </Layout>
+    )}
