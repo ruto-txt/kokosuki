@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+}
+
+main {
+    max-width: 767px;
+    min-width: 320px;
+    margin: auto;
+    border: solid;
+}
+@media(min-width: 992px){
+    main {
+        max-width: 100%;
+    }
+  }
