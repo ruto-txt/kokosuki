@@ -7,14 +7,19 @@ import React,{useState} from 'react';
 */
 export function Panels(props){
     // ステートの定義：今の状態
-    const [unko,setUnko]=useState("");
+    const [selected,setSelect]=useState([null,null]);
+    //記名ルールで配列にしてもまったく困らないが、どうしようかな
 
-    function handleClick(e){
-        alert(e);
+    // 1：状態を管理する
+    // どんな状態が必要？　今の選択状態（階層の深さ？　選択中の番号？
+    // 2：現状の状態によって表示を変える
+    // 3：状態を変更する
+    // 4：リターンする（できなければsetContentかpropsかな？
+    const SelectState = (props)=>{
+        const a = "選択状態：categoryを選んでくださいｗｗ"
+        return <div>{a}</div>
     }
-
     // オブジェクトで要素名を準備する……かな？
-    // オブジェクトを使ってdivgridをmapする。状態によって使うオブジェクトを変えるけど、今はいらない
     const objects=[
         {'id':1,'label':"hako1"},
         {'id':2,'label':"hako2"},
@@ -26,24 +31,18 @@ export function Panels(props){
         {'id':8,'label':"hako8"},
         {'id':9,'label':"hako9"},
     ]
-
-// jsxスタイリングがうまく働かないので、return内インライン記述します
-// const divlist = objects.map((obj)=>
-//     <div id={obj.id}>
-//         <span>{obj.label}</span>
-//     </div>
-// )
-
+    
     return (
         <>
+        <SelectState/>
         <div className="grid-container">
             {objects.map((obj,index)=>
-                <div id={obj.id} onClick={()=>setUnko(index+1)}>
+                <div id={obj.id} onClick={()=>setSelect(index+1)}>
                     <span>{obj.label}</span>
                 </div>
             )}
         </div>
-            <div><p id="description">{props.children}、ステートテスト：{unko}</p></div>
+            <div><p id="description">{props.children}、ステートテスト：{selected}</p></div>
         <style jsx>{`
             .grid-container{
                 display:grid;
@@ -66,3 +65,4 @@ export function Panels(props){
 }
 
 export default Panels
+
