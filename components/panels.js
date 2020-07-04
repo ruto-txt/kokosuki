@@ -1,4 +1,4 @@
-import React,{useState,useMemo,useLayoutEffect} from 'react';
+import React,{useState,useMemo} from 'react';
 
 /*
 *　9ボックスパネル
@@ -59,17 +59,17 @@ export function Panels(props){
             }else if(item==input){
                 alert("うんこが"+[category,item]+"kg出ましたｗｗｗｗ")
                 update=[null,null]
+                setSelect(update)
+                return [category,item]
             }else{
                 update=[category,input]
             }
         }else{update=[null,null]}
 
         setSelect(update)
-        //細目状態なら、一致していれば確定をスロー。
-        //していなければ新しい細目を代入する
-
-
     }
+    
+
 
     const SelectState = ()=>{
         const category = selected[0]
