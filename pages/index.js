@@ -8,19 +8,22 @@ import React,{useState,useMemo} from 'react'
 function Test(props){
     return (
         <>
-        <button onClick={()=>props.onClick(1)}>てすと１</button>
-        <button onClick={()=>props.onClick(2)}>てすと２</button>
-        <button onClick={()=>props.onClick(3)}>てすと３</button>
+        <button onClick={()=>props.onClick([1,1])}>てすと１</button>
+        <button onClick={()=>props.onClick([2,2])}>てすと２</button>
+        <button onClick={()=>props.onClick([3,3])}>てすと３</button>
         </>
         )
 }
 
 export default function Home(){
     const [history, sethistory] = useState([[0,0]]);
-    const [test,setTestState]=useState()
+    const [test,setTestState]=useState([])
 
     function testmethod(props){
-        test?setTestState():setTestState(props)
+        const a = test.slice()
+        a.push(props)
+        setTestState(a)
+        console.log(a)
     }
 
     const current = useMemo(()=>history[0],[history])
