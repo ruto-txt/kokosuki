@@ -6,7 +6,6 @@ import React,{useState,useMemo} from 'react';
     状態によって表示を変える
     */
 export function Panels(props){
-    const [selected,setSelect]=useState([null,null]);
     const objects={
         1:{'id':1,'label':"hako1"},
         2:{'id':2,'label':"hako2"},
@@ -18,58 +17,8 @@ export function Panels(props){
         8:{'id':8,'label':"hako8"},
         9:{'id':9,'label':"hako9"},
     }
-    
-    const identify=useMemo(()=>{
-        const category = selected[0]
-        const item = selected[1]
-        if(!category&&!item){
-            return "reception"
-        }else if(category&&!item){
-            return "category"
-        }else if(category&&item){
-            return "current"
-        }else{return "reception"}
-    },[selected])
-
-    // 1：状態を管理する
-    // どんな状態が必要？　今の選択状態（階層の深さ？　選択中の番号？
-    // 2：現状の状態によって表示を変える
-    // 3：状態を変更する
-    // 4：リターンする（できなければsetContentかpropsかな？
-
-    function handleSetSelectState(input,state){
-        const category = state[0]
-        const item = state[1]
-        let update =[null,null]
-        //現在の状態を確認する
-        //無選択状態なら、カテゴリに代入する
-        if(!category&&!item){
-            update=[input,null]
-        }else if(category&&!item){
-            //カテゴリ状態なら、一致していれば未選択に戻す。していなければ細目に代入する
-            if(category==input){
-                update=[null,null]
-            }else{
-                update=[category,input]
-            }
-        }else if(category&&item){
-            //細目状態なら、一致していれば確定する。していなければ細目を上書きする。戻るなら戻る
-            if(category==input){
-                update=[null,null]
-            }else if(item==input){
-                alert("うんこが"+[category,item]+"kg出ましたｗｗｗｗ")
-                update=[null,null]
-                setSelect(update)
-                return [category,item]
-            }else{
-                update=[category,input]
-            }
-        }else{update=[null,null]}
-
-        setSelect(update)
-    }
-    
-
+    const identify=props.identify
+    const selected = props.selected
 
     const SelectState = ()=>{
         const category = selected[0]
@@ -122,11 +71,12 @@ export function Panels(props){
     return (
         <>
         <SelectState/>
+        <h1>{selected}</h1>
         <div className="grid-container">
             {Object.keys(objects).map(key=>
                 <div id={objects[key].id} className={calcClassName(key)}
-                onClick={()=>handleSetSelectState(objects[key].id,selected)}>
-                {disprayLabel(key)}
+                onClick={props.onClick(objects[key].id,selected)}>
+                {disprayLabel(key)}{selected}
                 </div>
             )}
         </div>
