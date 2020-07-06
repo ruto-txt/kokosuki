@@ -1,4 +1,4 @@
-import React,{useState,useMemo} from 'react';
+import React,{useMemo} from 'react';
 
 /*
 *　9ボックスパネル
@@ -17,8 +17,21 @@ export function Panels(props){
         8:{'id':8,'label':"hako8"},
         9:{'id':9,'label':"hako9"},
     }
-    const identify=props.identify
+    
     const selected = props.selected
+    const identify=useMemo(()=>{
+        const category = selected[0]
+        const item = selected[1]
+        if(!category&&!item){
+            return "reception"
+        }else if(category&&!item){
+            return "category"
+        }else if(category&&item){
+            return "current"
+        }
+        return "reception"
+        },[selected])
+    
 
     const SelectState = ()=>{
         const category = selected[0]
@@ -39,7 +52,6 @@ export function Panels(props){
         if(identify=="reception"){//未選択の時
             return <span>{cateLabel}</span>
         }else{
-            // const itemLabel =objects[category][key].label
             const itemLabel =objects[category].label + "の" + key
 
             //カテゴリ選択のとき
@@ -54,16 +66,13 @@ export function Panels(props){
             }
             return <span>{itemLabel}</span>
         }
-    
     }
 
     function calcClassName(key){
         if(identify=="reception"){
             return "reception"
         }else if(identify=="current"){
-            if(key==selected[1]){
-                return "current"
-            }
+            if(key==selected[1]){return "current"}
         }
         return key==selected[0]?"categoryBack":"category"
     }
@@ -75,9 +84,8 @@ export function Panels(props){
         <div className="grid-container">
             {Object.keys(objects).map(key=>
                 <div id={objects[key].id} className={calcClassName(key)}
-                onClick={props.onClick(objects[key].id,selected)}>
-                {disprayLabel(key)}{selected}
-                </div>
+                onClick={()=>props.onClick(objects[key].id,selected)}>
+                {disprayLabel(key)}</div>
             )}
         </div>
         <div><p id="description">{props.children}、ステートテスト：{selected}</p></div>
