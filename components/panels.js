@@ -6,17 +6,7 @@ import React,{useMemo} from 'react';
     状態によって表示を変える
     */
 export function Panels(props){
-    const objects={
-        1:{'id':1,'label':"hako1"},
-        2:{'id':2,'label':"hako2"},
-        3:{'id':3,'label':"hako3"},
-        4:{'id':4,'label':"hako4"},
-        5:{'id':5,'label':"hako5"},
-        6:{'id':6,'label':"hako6"},
-        7:{'id':7,'label':"hako7"},
-        8:{'id':8,'label':"hako8"},
-        9:{'id':9,'label':"hako9"},
-    }
+    const objects=props.objects
     
     const selected = props.selected
     const identify=useMemo(()=>{
