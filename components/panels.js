@@ -70,7 +70,6 @@ export function Panels(props){
     return (
         <>
         <SelectState/>
-        <h1>{selected}</h1>
         <div className="grid-container">
             {Object.keys(objects).map(key=>
                 <div id={objects[key].id} className={calcClassName(key)}

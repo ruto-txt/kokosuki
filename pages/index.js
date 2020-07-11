@@ -83,6 +83,12 @@ export default function Home(){
         </header>
         <main>
             <h2>{history}</h2>
+            <section>
+                {/* {history.length<1?<p>プレビューエリア</p>:
+                <Preview history={history} objects={objects}
+                funcSwap={(index,direction)=>swapStateArr(history,index,direction)}/>} */}
+            </section>
+            <div>シェアボタンエリア</div>
             <button onClick={()=>swapStateArr(history,1)}>てすと{history[1]}を↑へ</button>
             <button onClick={()=>swapStateArr(history,2)}>てすと{history[2]}を↑へ</button>
             <button onClick={()=>swapStateArr(history,3)}>てすと{history[3]}を↑へ</button>
@@ -90,11 +96,6 @@ export default function Home(){
             <Panels selected={current} objects={objects}
             onClick={(input,state)=>handleSetSelectState(input,state)}>
                 メインのpanel</Panels>
-            <section>
-                <p>プレビューエリア</p>
-                <Preview state={history} objects={objects}></Preview>
-            </section>
-            <div>シェアボタンエリア</div>
         </main>
         <footer>フッター</footer>
     
