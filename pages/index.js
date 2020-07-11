@@ -22,16 +22,15 @@ export default function Home(){
         9:{'id':9,'label':"hako9"},
     }
 
-    function swapStateArr(arr,index,direction){
-        let tag = direction=="down"?-1:1
+    function swapStateArr(arr,index){
         //子要素ナンバーより前の要素を抜き取る
         let localArr = arr.slice(0,index)
 
         //子要素ナンバーを差し込む
-        localArr.splice(index-tag,0,arr[index])
+        localArr.splice(index-1,0,arr[index])
 
         //子要素ナンバーより後の要素を追加する
-        localArr=localArr.concat(arr.slice(index+tag))
+        localArr=localArr.concat(arr.slice(index+1))
 
         sethistory(localArr)
     }
@@ -84,14 +83,14 @@ export default function Home(){
         <main>
             <h2>{history}</h2>
             <section>
-                {/* {history.length<1?<p>プレビューエリア</p>:
+                {history.length<1?<p>プレビューエリア</p>:
                 <Preview history={history} objects={objects}
-                funcSwap={(index,direction)=>swapStateArr(history,index,direction)}/>} */}
+                funcSwap={(index)=>swapStateArr(history,index)}/>}
             </section>
             <div>シェアボタンエリア</div>
-            <button onClick={()=>swapStateArr(history,1)}>てすと{history[1]}を↑へ</button>
-            <button onClick={()=>swapStateArr(history,2)}>てすと{history[2]}を↑へ</button>
-            <button onClick={()=>swapStateArr(history,3)}>てすと{history[3]}を↑へ</button>
+            <button onClick={()=>swapStateArr(history,0,"down")}>てすと{history[0]}を↓へ</button>
+            <button onClick={()=>swapStateArr(history,1,"down")}>てすと{history[1]}を↓へ</button>
+            <button onClick={()=>swapStateArr(history,2,"down")}>てすと{history[2]}を↓へ</button>
             <Link href="/damii"><a>＞ダミーリンク＜</a></Link>
             <Panels selected={current} objects={objects}
             onClick={(input,state)=>handleSetSelectState(input,state)}>
