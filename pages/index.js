@@ -87,17 +87,16 @@ export default function Home(){
                 <Preview history={history} objects={objects}
                 funcSwap={(index)=>swapStateArr(history,index)}/>}
             </section>
-            <div>シェアボタンエリア</div>
-            <button onClick={()=>swapStateArr(history,0,"down")}>てすと{history[0]}を↓へ</button>
-            <button onClick={()=>swapStateArr(history,1,"down")}>てすと{history[1]}を↓へ</button>
-            <button onClick={()=>swapStateArr(history,2,"down")}>てすと{history[2]}を↓へ</button>
-            <Link href="/damii"><a>＞ダミーリンク＜</a></Link>
-            <Panels selected={current} objects={objects}
-            onClick={(input,state)=>handleSetSelectState(input,state)}>
-                メインのpanel</Panels>
+            <section>
+                <div>シェアボタンエリア</div>
+                {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
+            </section>
+            <section>
+                <Panels selected={current} objects={objects}
+                onClick={(input,state)=>handleSetSelectState(input,state)}>メインのpanel</Panels>
+            </section>
         </main>
         <footer>フッター</footer>
-    
     <style jsx>{`
     .title{
         text-align: center;
