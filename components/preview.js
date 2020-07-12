@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import MediaQuery from 'react-responsive';
 
 function Preview(props){
     const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +11,19 @@ function Preview(props){
     //クリックする→開閉stateが発火する→該当行のしたに一行gridが追加される
     
     //コンポジションでうんちゃらこんちゃらできそうなのでやってみよう
+    //理想：モバイル版/ＰＣ版のコンポーネントを書き込む
+    //書き込まれたコンポーネントからは、各々の場合での状態を返す。モバイル版ではクリックイベントつき。
+    function DivApportion(props){
+         return(<>
+        <MediaQuery query="(max-width:767px)">
+            <div>スマホ向け表示 {props.text}</div>{props.id}{isOpen?"true":"false"}
+        </MediaQuery>
+        <MediaQuery query="(min-width:768px)">
+            <div>大画面向け表示 {props.text}</div>{props.children}
+        </MediaQuery>
+        </>)
+    }
+
 
     function DetailsDiv(props){
         if(isOpen){
@@ -37,16 +51,26 @@ function Preview(props){
         <div className="main-block" onClick={()=>{alert(false==0)}}>テストブロック</div><div></div><div></div><div></div>
         <div className="main-block">テストブロック</div><div></div><div></div><div></div>
     </div>
+
     {props.history.map((valueHistNum,index)=>
         <div key={index + valueHistNum} className="grid-container">
-            <DetailsDiv valueHistNum={valueHistNum} id={index+1}>
-                {objects[valueHistNum[0]].label}の、子要素{valueHistNum[1]}</DetailsDiv>
+        <DivApportion id={index+1} text={objects[valueHistNum[0]].label+"の、子要素"+valueHistNum[1]}>
             {index==0?<div className="arrow-block-non">↑</div>:
                 <button className="arrow-block" onClick={()=>props.funcSwap(index)}>↑</button>}
             {index==props.history.length-1?<div className="arrow-block-non">↓</div>:
                 <button className="arrow-block" onClick={()=>props.funcSwap(index+1)}>↓</button>}
             <div className="delete-block" onClick={()=>props.funcDel(index)}>×</div>
+        </DivApportion>
         </div>
+        // <div key={index + valueHistNum} className="grid-container">
+        //     <DetailsDiv valueHistNum={valueHistNum} id={index+1}>
+        //         {objects[valueHistNum[0]].label}の、子要素{valueHistNum[1]}</DetailsDiv>
+        //     {index==0?<div className="arrow-block-non">↑</div>:
+        //         <button className="arrow-block" onClick={()=>props.funcSwap(index)}>↑</button>}
+        //     {index==props.history.length-1?<div className="arrow-block-non">↓</div>:
+        //         <button className="arrow-block" onClick={()=>props.funcSwap(index+1)}>↓</button>}
+        //     <div className="delete-block" onClick={()=>props.funcDel(index)}>×</div>
+        // </div>
         )}
     <style jsx>{`
     .grid-container{
