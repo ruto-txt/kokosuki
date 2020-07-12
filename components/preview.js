@@ -16,11 +16,12 @@ function Preview(props){
                 <button className="arrow-block" onClick={()=>props.funcSwap(index)}>↑</button>}
             {index==props.history.length-1?<div className="arrow-block-non">↓</div>:
                 <button className="arrow-block" onClick={()=>props.funcSwap(index+1)}>↓</button>}
+            <div className="delete-block" onClick={()=>props.funcDel(index)}>×</div>
         </div>)}
     <style jsx>{`
     .grid-container{
         display:grid;
-        grid-template-columns:1fr 30px 30px;
+        grid-template-columns:1fr 30px 30px 20px;
         margin:5px 10px;
         gap:5px;
         align-items:center;
@@ -37,6 +38,11 @@ function Preview(props){
     .arrow-block-non{
         text-align:center;
         background:gray;
+    }
+    .delete-block{
+        text-align:center;
+        background:tomato;
+
     }
     `}</style>
     </>)

@@ -35,6 +35,12 @@ export default function Home(){
         sethistory(localArr)
     }
     
+    function deleteStateArr(arr,index){
+        let localArr = arr.slice(0,index)//子要素ナンバーより前の要素を抜き取る
+        localArr=localArr.concat(arr.slice(index+1))//子要素ナンバーより後の要素を詰めて追加する
+        sethistory(localArr)//上書きする
+    }
+
     function handleSetSelectState(input,state){
         const category = state?state[0]:false
         const item = state?state[1]:false
@@ -85,7 +91,8 @@ export default function Home(){
             <section>
                 {history.length<1?<p>プレビューエリア</p>:
                 <Preview history={history} objects={objects}
-                funcSwap={(index)=>swapStateArr(history,index)}/>}
+                funcSwap={(index)=>swapStateArr(history,index)}
+                funcDel={index=>deleteStateArr(history,index)}/>}
             </section>
             <section>
                 <div>シェアボタンエリア</div>

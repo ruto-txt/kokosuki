@@ -72,26 +72,39 @@ export function Panels(props){
         <SelectState/>
         <div className="grid-container">
             {Object.keys(objects).map(key=>
-                <div id={objects[key].id} className={calcClassName(key)}
+                <button key={objects[key].id} id={objects[key].id} className={calcClassName(key)}
                 onClick={()=>props.onClick(objects[key].id,selected)}>
-                {disprayLabel(key)}</div>
+                    <span>{disprayLabel(key)}</span>
+                </button>
             )}
         </div>
         <div><p id="description">{props.children}、ステートテスト：{selected}</p></div>
         <style jsx>{`
             .grid-container{
                 display:grid;
-                gap:10px;
+                margin:5px;
                 grid-template-columns:repeat(3,minmax(100px,1fr));
-                grid-template-rows:minmax(90px,1fr);
-                justify-items: center;
+                gap:10px;
+                grid-template-rows:minmax(80px,1fr);
                 align-items:center;
             }
-            .grid-container>div{
+            .grid-container>button{
                 text-align:center;
-                padding:25% 25%;
+                padding-bottom:90%;
                 border-radius: 10px;
+                position: relative;
             }
+
+            .grid-container>button>span{
+            /* height: 100px; */
+            position: absolute;
+            width:90px;
+            top: 50%;
+            left: 50%;
+            -webkit-transform : translate(-50%,-50%);
+            transform : translate(-50%,-50%);
+        }
+
             .reception{
                 background:skyblue;
             }
