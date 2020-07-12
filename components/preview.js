@@ -1,23 +1,53 @@
-function Preview(props){
-    //上に並べ替えるのを返すときの返し
-    //多分普通にリフトアップしないといけないね
+import React,{useState} from 'react'
 
-    //表示する文字をどこから拾ってくるかって言うと上位なんだよなぁ
+function Preview(props){
+    const [isOpen, setIsOpen] = useState(false);
     const objects=props.objects
 
-    //一番上、または一番下のときは表示を変えるやつ
+    //モバイルファーストで考えると、ツールチップを横に表示するのはクソなので、上手に隠す必要があります
+    //なのでその辺を条件付きレンダーします
+    //モバイル版特別の仕様として、タップで操作オプションが展開されるツールチップを実装します
+    //クリックする→開閉stateが発火する→該当行のしたに一行gridが追加される
+    
+    //コンポジションでうんちゃらこんちゃらできそうなのでやってみよう
 
-    //grid line でアレを描くと良きね
+    function DetailsDiv(props){
+        if(isOpen){
+            if(props.id==isOpen){
+                return (
+                    <div onClick={()=>setIsOpen([false])}>
+                    {objects[props.valueHistNum[0]].label}の、子要素{props.valueHistNum[1]}　オープン
+                    </div>
+                )}
+            return (
+                <div onClick={()=>setIsOpen(props.id)}>
+                    {props.id}{objects[props.valueHistNum[0]].label}の、子要素{props.valueHistNum[1]}　クローズ
+                </div>)
+        }else{
+            return (
+                <div onClick={()=>setIsOpen(props.id)}>
+                    {props.id}{objects[props.valueHistNum[0]].label}の、子要素{props.valueHistNum[1]}　クローズ
+                </div>
+            )}
+
+    }
+
     return (<>
+    <div className="grid-container">
+        <div className="main-block" onClick={()=>{alert(false==0)}}>テストブロック</div><div></div><div></div><div></div>
+        <div className="main-block">テストブロック</div><div></div><div></div><div></div>
+    </div>
     {props.history.map((valueHistNum,index)=>
-        <div className="grid-container">
-            <div className="main-block">{objects[valueHistNum[0]].label}の、子要素{valueHistNum[1]}</div>
+        <div key={index + valueHistNum} className="grid-container">
+            <DetailsDiv valueHistNum={valueHistNum} id={index+1}>
+                {objects[valueHistNum[0]].label}の、子要素{valueHistNum[1]}</DetailsDiv>
             {index==0?<div className="arrow-block-non">↑</div>:
                 <button className="arrow-block" onClick={()=>props.funcSwap(index)}>↑</button>}
             {index==props.history.length-1?<div className="arrow-block-non">↓</div>:
                 <button className="arrow-block" onClick={()=>props.funcSwap(index+1)}>↓</button>}
             <div className="delete-block" onClick={()=>props.funcDel(index)}>×</div>
-        </div>)}
+        </div>
+        )}
     <style jsx>{`
     .grid-container{
         display:grid;
@@ -46,6 +76,24 @@ function Preview(props){
     }
     `}</style>
     </>)
+}
+
+
+function DetailsDiv(props){
+    const [isOpen, setisOpen] = useState(false);
+    if(isOpen){
+            return (
+                <div onClick={()=>setisOpen(!isOpen)}>
+                {props.children}　オープン{isOpen}
+                </div>
+            )
+    }else{
+        return (
+            <div onClick={()=>setisOpen(!isOpen)}>
+                {props.children}　クローズ{isOpen}
+            </div>
+        )}
+
 }
 
 export default Preview
