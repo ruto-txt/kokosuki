@@ -2,9 +2,9 @@ import React,{useState} from 'react'
 import MediaQuery from 'react-responsive';
 
 function Preview(props){
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(null);
     const objects=props.objects
-
+    const history=props.history
     //モバイルファーストで考えると、ツールチップを横に表示するのはクソなので、上手に隠す必要があります
     //なのでその辺を条件付きレンダーします
     //モバイル版特別の仕様として、タップで操作オプションが展開されるツールチップを実装します
@@ -15,109 +15,74 @@ function Preview(props){
     //書き込まれたコンポーネントからは、各々の場合での状態を返す。モバイル版ではクリックイベントつき。
     function DivApportion(props){
          return(<>
-        <MediaQuery query="(max-width:767px)">
-            <div>スマホ向け表示 {props.text}</div>{props.id}{isOpen?"true":"false"}
-        </MediaQuery>
-        <MediaQuery query="(min-width:768px)">
-            <div>大画面向け表示 {props.text}</div>{props.children}
-        </MediaQuery>
-        </>)
+         <div key={props.id} className="grid-container">
+            <MediaQuery query="(min-width:768px)">
+                <div className="main-block">大画面向け表示 {props.text}</div>{props.children}
+            </MediaQuery>
+            <MediaQuery query="(max-width:767px)">
+                {isOpen==props.id?
+                    <><div className="main-block mb" onClick={()=>setIsOpen(null)}>スマホ向け表示 open {props.text}</div>
+                    <div></div>{props.children}</>:
+                    <div className="main-block mb" onClick={()=>setIsOpen(props.id)}>スマホ向け表示 closed {props.text}</div>
+                }
+            </MediaQuery>
+        </div>
+            <style jsx>{`
+                .grid-container{
+                    display:grid;
+                    grid-template-columns:1fr 30px 30px 30px;
+                    margin:5px 10px;
+                    gap:5px;
+                    align-items:center;
+                }
+                .main-block{
+                    border : 1px solid;
+                    background:skyblue;
+                    padding:0% 8px;
+                    transition-timing-function: cubic-bezier(1,0,0,1)
+                }
+                .mb{
+                    grid-column:1/5;
+                }
+                `}</style>
+            </>)
     }
 
-
-    function DetailsDiv(props){
-        if(isOpen){
-            if(props.id==isOpen){
-                return (
-                    <div onClick={()=>setIsOpen([false])}>
-                    {objects[props.valueHistNum[0]].label}の、子要素{props.valueHistNum[1]}　オープン
-                    </div>
-                )}
-            return (
-                <div onClick={()=>setIsOpen(props.id)}>
-                    {props.id}{objects[props.valueHistNum[0]].label}の、子要素{props.valueHistNum[1]}　クローズ
-                </div>)
-        }else{
-            return (
-                <div onClick={()=>setIsOpen(props.id)}>
-                    {props.id}{objects[props.valueHistNum[0]].label}の、子要素{props.valueHistNum[1]}　クローズ
-                </div>
-            )}
-
-    }
+    function ArrowBlock(props){
+        return <>
+        {props.index==0?<div className="arrow-block-non grid1">↑</div>
+        :<button className="arrow-block grid1" onClick={()=>{setIsOpen(null);props.funcSwap(props.index)}}>↑</button>}
+        {props.index==history.length-1?<div className="arrow-block-non grid2">↓</div>
+        :<button className="arrow-block grid2" onClick={()=>{setIsOpen(null);props.funcSwap(props.index+1)}}>↓</button>}
+        <div className="delete-block grid3" onClick={()=>props.funcDel(props.index)}>×</div>
+        <style jsx>{`
+        .arrow-block{
+            text-align:center;
+            background:pink;
+        }
+        .arrow-block-non{
+            text-align:center;
+            background:gray;
+        }
+        .delete-block{
+            text-align:center;
+            background:tomato;
+        }
+        .grid1{grid-column:2;}
+        .grid2{grid-column:3;}
+        .grid3{grid-column:4;}
+        `}</style>
+    </>}
 
     return (<>
-    <div className="grid-container">
-        <div className="main-block" onClick={()=>{alert(false==0)}}>テストブロック</div><div></div><div></div><div></div>
-        <div className="main-block">テストブロック</div><div></div><div></div><div></div>
-    </div>
-
     {props.history.map((valueHistNum,index)=>
-        <div key={index + valueHistNum} className="grid-container">
-        <DivApportion id={index+1} text={objects[valueHistNum[0]].label+"の、子要素"+valueHistNum[1]}>
-            {index==0?<div className="arrow-block-non">↑</div>:
-                <button className="arrow-block" onClick={()=>props.funcSwap(index)}>↑</button>}
-            {index==props.history.length-1?<div className="arrow-block-non">↓</div>:
-                <button className="arrow-block" onClick={()=>props.funcSwap(index+1)}>↓</button>}
-            <div className="delete-block" onClick={()=>props.funcDel(index)}>×</div>
+        <DivApportion key={index+1} id={index+1} text={objects[valueHistNum[0]].label+"の、子要素"+valueHistNum[1]}>
+            <ArrowBlock index={index} funcSwap={(arg)=>{props.funcSwap(arg)}} funcDel={(arg)=>props.funcDel(arg)}/>
         </DivApportion>
-        </div>
-        // <div key={index + valueHistNum} className="grid-container">
-        //     <DetailsDiv valueHistNum={valueHistNum} id={index+1}>
-        //         {objects[valueHistNum[0]].label}の、子要素{valueHistNum[1]}</DetailsDiv>
-        //     {index==0?<div className="arrow-block-non">↑</div>:
-        //         <button className="arrow-block" onClick={()=>props.funcSwap(index)}>↑</button>}
-        //     {index==props.history.length-1?<div className="arrow-block-non">↓</div>:
-        //         <button className="arrow-block" onClick={()=>props.funcSwap(index+1)}>↓</button>}
-        //     <div className="delete-block" onClick={()=>props.funcDel(index)}>×</div>
-        // </div>
         )}
-    <style jsx>{`
-    .grid-container{
-        display:grid;
-        grid-template-columns:1fr 30px 30px 20px;
-        margin:5px 10px;
-        gap:5px;
-        align-items:center;
-    }
-    .main-block{
-        border : 1px solid;
-        background:skyblue;
-        padding:0% 8px;
-    }
-    .arrow-block{
-        text-align:center;
-        background:pink;
-    }
-    .arrow-block-non{
-        text-align:center;
-        background:gray;
-    }
-    .delete-block{
-        text-align:center;
-        background:tomato;
-
-    }
-    `}</style>
     </>)
 }
 
 
-function DetailsDiv(props){
-    const [isOpen, setisOpen] = useState(false);
-    if(isOpen){
-            return (
-                <div onClick={()=>setisOpen(!isOpen)}>
-                {props.children}　オープン{isOpen}
-                </div>
-            )
-    }else{
-        return (
-            <div onClick={()=>setisOpen(!isOpen)}>
-                {props.children}　クローズ{isOpen}
-            </div>
-        )}
-
-}
 
 export default Preview
