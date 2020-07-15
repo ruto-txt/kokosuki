@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/layout'
+import Forms from '../components/forms.js'
 import Panels from '../components/panels.js'
 import React,{useState} from 'react'
 // import PanelsState from '../components/panels-state.js'
@@ -94,6 +95,7 @@ export default function Home(){
                 funcDel={index=>deleteStateArr(history,index)}/>}
             </section>
             <section>
+                <Forms></Forms>
                 <div>シェアボタンエリア</div>
                 {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
             </section>
