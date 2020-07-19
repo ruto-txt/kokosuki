@@ -29,7 +29,7 @@ export function Panels(props){
         if(identify=="current"){
             return <div>{item +"の"+ objects[category].label + "が選択されています"}</div>
         }else if(identify=="category"){
-            return <div>{objects[category].label + "からふさわしいものを選んでください"}</div>
+            return <p>{objects[category].label}からふさわしいものを選んでください<br/>{objects[category].explanatory}</p>
         }else{
             return <div>{"カテゴリを選んでください"}</div>
         }
@@ -42,19 +42,16 @@ export function Panels(props){
         if(identify=="reception"){//未選択の時
             return <span>{cateLabel}</span>
         }else{
-            const itemLabel =objects[category].label + "の" + key
+            //親番号のパネルは早期リターン
+            if(key==category){return <span>{cateLabel} <br/>＜戻る</span>}
 
-            //カテゴリ選択のとき
-            if(identify=="category"){
-                return key==category?<span>{cateLabel} <br/>＜戻る</span>:<span>{itemLabel}</span>
-            }
-            //細目選択中のとき
-            if(key==selected[1]){
-                    return <span>{itemLabel} <br/>を選択</span>
-            }else if(key==selected[0]){
-                return <span>{cateLabel} <br/>＜戻る</span>
-            }
-            return <span>{itemLabel}</span>
+            //イテレータのkeyで、childrenの8つの内容にアクセスする
+            let callnum = category<key?key-1:key
+            const itemLabel =objects[category].children[callnum].label
+
+            //細目選択中ならちょっと文字を変える
+            return key==selected[1]?
+            <span>{itemLabel} <br/>を選択</span>:<span>{itemLabel}</span>
         }
     }
 
@@ -72,8 +69,8 @@ export function Panels(props){
         <SelectState/>
         <div className="grid-container">
             {Object.keys(objects).map(key=>
-                <button key={objects[key].id} id={objects[key].id} className={calcClassName(key)}
-                onClick={()=>props.onClick(objects[key].id,selected)}>
+                <button key={key} className={calcClassName(key)}
+                onClick={()=>props.onClick(key,selected)}>
                     <span>{disprayLabel(key)}</span>
                 </button>
             )}

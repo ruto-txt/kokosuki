@@ -1,9 +1,8 @@
 import React,{useState} from 'react'
 
 function Forms(){
-    const [isOpen, setIsOpen] = useState(false);
-
-    if(!isOpen){
+    const [isOpen, setIsOpen] = useState(()=>false);
+    if(isOpen){
         return (<>
             <form className="grid-container button">
                 <label name="title">title:</label><input type="text" name="title" placeholder="タイトル"></input>
