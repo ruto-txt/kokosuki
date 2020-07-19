@@ -7,9 +7,10 @@ main {
     min-width: 320px;
     margin: auto;
     border: solid;
+    /* color: */
 }
-/* @media(min-width: 992px){
+@media(min-width: 992px){
     main {
-        max-width: 100%;
+        max-width: 1080px;
     }
-  } */
+  }

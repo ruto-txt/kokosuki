@@ -188,7 +188,7 @@ const object={
     }
     
     return (
-    <Layout>
+        <>
         <Head>
             <title>ここすきチェッカー</title>
             <link rel="icon" href="/favicon.ico" />
@@ -198,36 +198,52 @@ const object={
         </header>
         <main className="grid-container">
             <h2 className="header">{history} / {current}</h2>
-            <section>
+            <section className="preview">
                 {history.length<1?<p>プレビューエリア</p>:
                 <Preview history={history} objects={object}
                 funcSwap={(index)=>swapStateArr(history,index)}
                 funcDel={index=>deleteStateArr(history,index)}/>}
             </section>
-            <section>
+            <section className="share">
                 <div>シェアボタンエリア</div>
                 <Forms/>
                 {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
             </section>
-            <section>
+            <section className="panels">
                 <Panels selected={current} objects={object}
                 onClick={(input,state)=>handleSetSelectState(input,state)}>メインのpanel</Panels>
             </section>
         </main>
         <footer>フッター</footer>
-    <style jsx>{`
-    .grid-container{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        align-content:space-around;
-    }
-    .title{
-        text-align: center;
-    }
-    .header{
-        grid-column:1/3;
-    }
-    `}
-    </style>
-    </Layout>
+        <style jsx>{`
+        .title{
+            text-align: center;
+        }
+        @media(min-width: 992px){
+        .grid-container{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:0px 30px;
+            align-content:space-between;
+        }
+            .header{
+                grid-column:1/ span 2;
+                justify-self:center;
+            }
+            .preview{
+                margin:30px 0px 0px 0px;
+                order:2;
+            }
+            .share{
+                order:3;
+                align-self:start;
+            }
+            .panels{
+                grid-row:2/ span 2;
+                order:1;
+            }
+        }
+        `}
+        </style>
+        </>
     )}
