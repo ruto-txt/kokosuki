@@ -15,7 +15,7 @@ function Preview(props){
     //書き込まれたコンポーネントからは、各々の場合での状態を返す。モバイル版ではクリックイベントつき。
     function DivApportion(props){
          return(<>
-         <div key={props.id} className="grid-container">
+         <div key={props.id} id={props.id} className="grid-container">
             <MediaQuery query="(min-width:768px)">
                 <div className="main-block">大画面向け表示 {props.text}</div>{props.children}
             </MediaQuery>
@@ -34,12 +34,17 @@ function Preview(props){
                     margin:5px 10px;
                     gap:5px;
                     align-items:center;
+                    opacity: 0;
+                    animation: 1s fadeIn forwards;
+                }
+                @keyframes fadeIn { /* ←追加 */
+                    from { opacity: 0; }
+                    to { opacity: 1; }
                 }
                 .main-block{
                     border : 1px solid;
                     background:skyblue;
                     padding:0% 8px;
-                    transition-timing-function: cubic-bezier(1,0,0,1)
                 }
                 .mb{
                     grid-column:1/5;

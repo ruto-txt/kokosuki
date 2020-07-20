@@ -24,15 +24,27 @@ export function Panels(props){
     
 
     const SelectState = ()=>{
-        const category = selected[0]
-        const item = selected[1]
+        const category = objects[selected[0]]
+        const item = selected[1]>selected[0]?selected[1]-1:selected[1]
+        var text
         if(identify=="current"){
-            return <div>{item +"の"+ objects[category].label + "が選択されています"}</div>
+            text=<>{category.label}から{category.children[item].label}が選択されています<br/><small>{category.children[item].explanatory}</small></>
         }else if(identify=="category"){
-            return <p>{objects[category].label}からふさわしいものを選んでください<br/>{objects[category].explanatory}</p>
+            text=<>{category.label}からふさわしいものを選んでください<br/><small>{category.explanatory}</small></>
         }else{
-            return <div>{"カテゴリを選んでください"}</div>
+            text="カテゴリを選んでください"
         }
+        return (
+        <>
+            <p>{text}</p>
+            <style jsx>{`
+                p{
+                    margin:0 1em;
+                    height:4rem;
+                }
+            `}
+            </style>
+        </>)
     }
     
     function disprayLabel(key){
