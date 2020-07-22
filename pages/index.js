@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Layout from '../components/layout'
 import Forms from '../components/forms.js'
 import Panels from '../components/panels.js'
-import React,{useState} from 'react'
+import React,{useState, useMemo,useCallback, useContext} from 'react'
 // import PanelsState from '../components/panels-state.js'
 import Preview from '../components/preview.js';
 
@@ -11,17 +11,6 @@ import Preview from '../components/preview.js';
 export default function Home(){
     const [history, sethistory] = useState([]);
     const [current,setcurrent]=useState([null,null])
-    // const objects={
-    //     1:{'id':1,'label':"hako1"},
-    //     2:{'id':2,'label':"hako2"},
-    //     3:{'id':3,'label':"hako3"},
-    //     4:{'id':4,'label':"hako4"},
-    //     5:{'id':5,'label':"hako5"},
-    //     6:{'id':6,'label':"hako6"},
-    //     7:{'id':7,'label':"hako7"},
-    //     8:{'id':8,'label':"hako8"},
-    //     9:{'id':9,'label':"hako9"},
-    // }
     
 const object={
     1:{'label':"世界観",'explanatory':"物語の舞台や背景が印象的だったときに。\n重要アイテムなども含まれます",
@@ -134,7 +123,7 @@ const object={
     }
 }
 
-    function swapStateArr(arr,index){
+    const swapStateArr=useCallback((arr,index)=>{
         //子要素ナンバーより前の要素を抜き取る
         let localArr = arr.slice(0,index)
 
@@ -145,15 +134,15 @@ const object={
         localArr=localArr.concat(arr.slice(index+1))
 
         sethistory(localArr)
-    }
-    
-    function deleteStateArr(arr,index){
+    })
+
+    const deleteStateArr=useCallback((arr,index)=>{
         let localArr = arr.slice(0,index)//子要素ナンバーより前の要素を抜き取る
         localArr=localArr.concat(arr.slice(index+1))//子要素ナンバーより後の要素を詰めて追加する
         sethistory(localArr)//上書きする
-    }
+    })
 
-    function handleSetSelectState(input,state){
+    const handleSetSelectState=useCallback((input,state)=>{
         const category = state?state[0]:false
         const item = state?state[1]:false
         if(!category&&!item){
@@ -185,8 +174,22 @@ const object={
                 return
             }
         }
-    }
+    })
     
+    const PreviewRender=useCallback(()=>{
+        return history.map((hisArr,key)=>
+            <Preview key={key} index={key} funcSwap={(index)=>swapStateArr(history,index)} funcDel={index=>deleteStateArr(history,index)}>
+                {object[hisArr[0]].label}の{object[hisArr[0]].children[1].label}
+            </Preview>)
+                {/* {object[hisArr[0]].label}の{object[hisArr[0]].children[hisArr[1]].label} */}
+        // history.map((hisArr,key)=>{
+            // <Preview key={key} index={key} funcSwap={(index)=>swapStateArr(history,index)} funcDel={index=>deleteStateArr(history,index)}>
+            //     {/* {object[hisArr[0]].label}の{object[hisArr[0]].children[hisArr[1]].label} */}
+            //     {hisArr[0]}と{hisArr[1]}
+            // </Preview>
+            // }
+    },[history])
+
     return (
         <>
         <Head>
@@ -199,10 +202,7 @@ const object={
         <main className="grid-container">
             <h2 className="header">{history} / {current}</h2>
             <section className="preview">
-                {history.length<1?<p>プレビューエリア</p>:
-                <Preview history={history} objects={object}
-                funcSwap={(index)=>swapStateArr(history,index)}
-                funcDel={index=>deleteStateArr(history,index)}/>}
+                {history.length<1?<p>プレビューエリア</p>:<PreviewRender></PreviewRender>}
             </section>
             <section className="share">
                 <div>シェアボタンエリア</div>

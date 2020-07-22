@@ -1,4 +1,4 @@
-import React,{useMemo} from 'react';
+import React,{useMemo, useCallback} from 'react';
 
 /*
 *　9ボックスパネル
@@ -8,7 +8,7 @@ import React,{useMemo} from 'react';
 export function Panels(props){
     const objects=props.objects
     
-    const selected = props.selected
+    const selected = useMemo(()=>props.selected,[props.selected])
     const identify=useMemo(()=>{
         const category = selected[0]
         const item = selected[1]
@@ -23,7 +23,7 @@ export function Panels(props){
         },[selected])
     
 
-    const SelectState = ()=>{
+    const SelectState = useCallback(()=>{
         const category = objects[selected[0]]
         const item = selected[1]>selected[0]?selected[1]-1:selected[1]
         var text
@@ -45,9 +45,9 @@ export function Panels(props){
             `}
             </style>
         </>)
-    }
+    })
     
-    function disprayLabel(key){
+    const disprayLabel=useCallback((key)=>{
         const category = selected[0]
         const cateLabel =objects[key].label
         
@@ -65,16 +65,16 @@ export function Panels(props){
             return key==selected[1]?
             <span>{itemLabel} <br/>を選択</span>:<span>{itemLabel}</span>
         }
-    }
+    })
 
-    function calcClassName(key){
+    const calcClassName=useCallback((key)=>{
         if(identify=="reception"){
             return "reception"
         }else if(identify=="current"){
             if(key==selected[1]){return "current"}
         }
         return key==selected[0]?"categoryBack":"category"
-    }
+    })
 
     return (
         <>
