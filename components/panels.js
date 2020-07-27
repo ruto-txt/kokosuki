@@ -25,7 +25,7 @@ export function Panels(props){
 
     const SelectState = useCallback(()=>{
         const category = objects[selected[0]]
-        const item = selected[1]>selected[0]?selected[1]-1:selected[1]
+        const item = selected[1]
         var text
         if(identify=="current"){
             text=<>{category.label}から{category.children[item].label}が選択されています<br/><small>{category.children[item].explanatory}</small></>
@@ -52,14 +52,13 @@ export function Panels(props){
         const cateLabel =objects[key].label
         
         if(identify=="reception"){//未選択の時
-            return <span>{cateLabel}</span>
+            return <>{cateLabel}</>
         }else{
             //親番号のパネルは早期リターン
             if(key==category){return <span>{cateLabel} <br/>＜戻る</span>}
 
             //イテレータのkeyで、childrenの8つの内容にアクセスする
-            let callnum = category<key?key-1:key
-            const itemLabel =objects[category].children[callnum].label
+            const itemLabel =objects[category].children[key].label
 
             //細目選択中ならちょっと文字を変える
             return key==selected[1]?
@@ -81,10 +80,10 @@ export function Panels(props){
         <SelectState/>
         <div className="grid-container">
             {Object.keys(objects).map(key=>
-                <button key={key} className={calcClassName(key)}
+                <div key={key} className={calcClassName(key)}
                 onClick={()=>props.onClick(key,selected)}>
                     <span>{disprayLabel(key)}</span>
-                </button>
+                </div>
             )}
         </div>
         <div><p id="description">{props.children}、ステートテスト：{selected}</p></div>
@@ -97,17 +96,17 @@ export function Panels(props){
                 grid-template-rows:minmax(80px,1fr);
                 align-items:center;
             }
-            .grid-container>button{
+            .grid-container>div{
                 text-align:center;
                 padding-bottom:90%;
                 border-radius: 10px;
                 position: relative;
+                cursor:pointer;
             }
-
-            .grid-container>button>span{
+            .grid-container>div>span{
             /* height: 100px; */
             position: absolute;
-            width:90px;
+            white-space: nowrap;
             top: 50%;
             left: 50%;
             -webkit-transform : translate(-50%,-50%);
