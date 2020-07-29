@@ -7,11 +7,19 @@ import React,{useState, useMemo,useCallback, useContext} from 'react'
 // import PanelsState from '../components/panels-state.js'
 import Preview from '../components/preview.js';
 
+export async function getServerSideProps({query}){
+    return{
+        props:{query}
+    }
+}
 
-export default function Home(){
+export default function Home({query}){
     const [history, sethistory] = useState([]);
     const [current,setcurrent]=useState([null,null])
-    
+
+    const inputUrl = query.url?decodeURIComponent(query.url):""
+    const inputTitle =query.title?decodeURIComponent(query.title):""
+
 const object={
     1:{'label':"世界観",'explanatory':"物語の舞台や背景が印象的だったときに。\n重要アイテムなども含まれます",
         'children':{
@@ -193,6 +201,7 @@ const object={
         // return category.label + "の" + item.label
     })
     
+
     return (
         <>
         <Head>
@@ -210,14 +219,14 @@ const object={
                 funcSwap={(index)=>swapStateArr(history,index)} funcDel={index=>deleteStateArr(history,index)}>
                 </Preview>}
             </section>
-            <section className="share">
-                <div>シェアボタンエリア</div>
-                <Forms/>
-                {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
-            </section>
             <section className="panels">
                 <Panels selected={current} objects={object}
                 onClick={(input,state)=>handleSetSelectState(input,state)}>メインのpanel</Panels>
+            </section>
+            <section className="share">
+                <div>シェアボタンエリア</div>
+                <Forms url={inputUrl} title={inputTitle}/>
+                {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
             </section>
         </main>
         <footer>フッター</footer>
@@ -237,7 +246,7 @@ const object={
                 justify-self:center;
             }
             .preview{
-                margin:30px 0px 0px 0px;
+                margin:1rem 0px 0px 0px;
                 order:2;
             }
             .share{

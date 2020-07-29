@@ -39,7 +39,7 @@ export function Panels(props){
             <p>{text}</p>
             <style jsx>{`
                 p{
-                    margin:0 1em;
+                    margin:0.8em 1em;
                     height:4rem;
                 }
             `}
