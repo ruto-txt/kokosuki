@@ -10,11 +10,11 @@ const Forms=(props)=>{
 
     return (<>
         <form className={isOpen?"grid-container":"grid-container is-hidden"}>
-            <label htmlfor="title">title:</label>
+            <label htmlFor="title">title:</label>
                 <input type="text" id="title" placeholder="タイトル" value={title}
                     onChange={e=>setTitle(e.target.value)}/>
             
-            <label htmlfor="url">url:</label>
+            <label htmlFor="url">url:</label>
                 <input type="url" id="url" placeholder="URL" value={url}
                     onChange={e=>setUrl(e.target.value)}/>
             
