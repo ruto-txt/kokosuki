@@ -4,30 +4,38 @@
 
 main {
     max-width: 767px;
-    min-width: 320px;
+    /* min-width: 100%; */
     margin: auto;
     border: solid;
     /* color: */
 }
 
 .ReactModal__Overlay {
-    opacity: 0;
-    transform: translateY(-5%);
-    transition: all 300ms ease-in-out;
-  }
-  
-  .ReactModal__Overlay--after-open {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-  
-  .ReactModal__Overlay--before-close {
-    opacity: 0;
-    transform: translateY(-5%);
-  }
+  opacity: 0;
+  transform: translateY(-5%);
+  transition: all 300ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transform: translateY(-5%);
+}
+
+.ReactModal__Content{
+  min-width:300px;
+  max-width:95%;
+}
 
 @media(min-width: 992px){
-    main {
+  .ReactModal__Content {
+    max-width: 50%;
+  }
+  main {
         max-width: 1080px;
     }
   }
