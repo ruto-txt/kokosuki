@@ -1,11 +1,13 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import Layout from '../components/layout'
 import Forms from '../components/forms.js'
 import Panels from '../components/panels.js'
 import React,{useState, useMemo,useCallback, useContext} from 'react'   
 // import PanelsState from '../components/panels-state.js'
 import Preview from '../components/preview.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter,faLine,faFacebookF } from '@fortawesome/free-brands-svg-icons'
+
+
 
 export async function getServerSideProps({query}){
     return{
@@ -14,14 +16,12 @@ export async function getServerSideProps({query}){
 }
 
 export default function Home({query}){
-    const [history, sethistory] = useState([]);
+    const [history,sethistory] = useState([]);
     const [current,setcurrent]=useState([null,null])
 
-    const inputUrl = query.url?decodeURIComponent(query.url):""
-    const inputTitle =query.title?decodeURIComponent(query.title):""
-
-const object={
-    1:{'label':"世界観",'explanatory':"物語の舞台や背景が印象的だったときに。\n重要アイテムなども含まれます",
+    
+    const object={
+        1:{'label':"世界観",'explanatory':"物語の舞台や背景が印象的だったときに。\n重要アイテムなども含まれます",
         'children':{
             //親番号
             2:{'label':"舞台",'phrase':"[1]が魅力的な[0]",'explanatory':"魅力的な世界だった"},
@@ -36,7 +36,7 @@ const object={
     },
     2:{'label':"キャラクター",'explanatory':"誰か特定の登場人物に対する感想",
         'children':{
-            1:{'label':"親近感",'phrase':"[1]のある[1]",'explanatory':"他人事に思えないキャラがいる、普通の人が頑張っている姿が魅力的だった"},
+            1:{'label':"親近感",'phrase':"[1]のある[0]",'explanatory':"他人事に思えないキャラがいる、普通の人が頑張っている姿が魅力的だった"},
             //親番号
             3:{'label':"憧れる",'phrase':"[1][0]",'explanatory':"かっこいい、存在感の輝くキャラクターがいた"},
             4:{'label':"かわいい",'phrase':"[1][0]",'explanatory':"理屈じゃない。kawaiiは世界を制する。"},
@@ -201,6 +201,99 @@ const object={
         // return category.label + "の" + item.label
     })
     
+    const [URL,setUrl]=useState(()=>query.url?query.url:"https://google.com");
+    const [title,setTitle]=useState(()=>query.title?query.title:"仮のタイトル")
+    const propsForInputs={
+        funcUpdateUrl:(arg)=>setUrl(arg),
+        funcUpdateTitle:(arg)=>setTitle(arg),
+        funcCopy:(arg)=>writeToClipboard(arg),
+        title:title,
+        url:URL
+    }
+    
+    const writeToClipboard = useCallback((target)=>{
+        var textarea = document.getElementById(target);
+        textarea.select();// 文字をすべて選択
+        document.execCommand("copy");// コピー
+        
+        alert(`コピーしました\n\n\"${textarea.textContent}\"`)
+    })
+    
+    const Shares=useCallback(()=>{
+        const _URL = useMemo(()=>encodeURIComponent(URL))
+        const tmp = history.map(arg=>inquiryText(arg)).join("\n");
+        const pretext =`${tmp}\n\n${title}\n${URL}`
+        const text = encodeURIComponent(pretext)
+
+        return (<>
+            <textarea id="pretext" readOnly value={pretext} onClick={()=>writeToClipboard("pretext")}/><small>{pretext.length}文字</small>
+            <div className="grid-wrapper">
+                <a id="tweetbutton" href={`https://twitter.com/share?url=${_URL}&text=${text}`} target="_blank"
+                    className="btn-social-square tw"><FontAwesomeIcon icon={faTwitter}/></a>
+                <a href={`https://www.facebook.com/share.php?u=${_URL}`} target="_blank"
+                    className="btn-social-square fb"><FontAwesomeIcon icon={faFacebookF}/></a>
+                <a href={`https://social-plugins.line.me/lineit/share?url=${_URL}`} target="_blank"
+                    className="btn-social-square ln"><FontAwesomeIcon icon={faLine}/></a>
+                {history.length!=0?<div className="btn-social-square btn" onClick={()=>{
+                    var textField = document.createElement('textarea')
+                    textField.innerText=`${tmp}`
+                    document.body.appendChild(textField)
+                    textField.select()
+                    document.execCommand('copy')
+                    textField.remove()
+                    alert(`コピーしました\n\n\"${tmp}\"`)
+                }}>コピー</div>:<div>{/** 空要素 */}</div>}
+            </div>
+            <style jsx>{`
+                #pretext{
+                    margin-left:10px;
+                    width:80%;
+                    height:6rem;
+                    resize:none;
+                }
+                .grid-wrapper{
+                    display:grid;
+                    max-width:70%;
+                    gap:2px;
+                    grid-template-columns:repeat(5,1fr);
+                    justify-items: center;
+                }
+                .btn-social-square {
+                    display: inline-block;
+                    text-decoration: none;
+                    margin:2px;
+                    width:100%;
+                    height: 2rem;
+                    line-height: 2rem;
+                    font-size: 23px;
+                    color:white;
+                    border-radius: 10px;
+                    text-align: center;
+                    overflow: hidden;
+                    transition: .3s;
+                }
+                .btn{
+                    font-size:16px;
+                    font-weight:bold;
+                    background: gray;
+                    cursor:pointer;
+                }
+                .btn-social-square:hover {
+                    -webkit-transform: scale(1.1);
+                    transform: scale(1.1);
+                }
+                .tw {
+                    background: #22b8ff;
+                    grid-column:1/span 2;
+                }
+                .fb {
+                    background: #6680d8;
+                }
+                .ln{
+                    background: #1dcd00;
+                }
+                `}</style>
+        </>)},[URL,title,history])
 
     return (
         <>
@@ -219,13 +312,16 @@ const object={
                 funcSwap={(index)=>swapStateArr(history,index)} funcDel={index=>deleteStateArr(history,index)}>
                 </Preview>}
             </section>
+
             <section className="panels">
                 <Panels selected={current} objects={object}
                 onClick={(input,state)=>handleSetSelectState(input,state)}>メインのpanel</Panels>
             </section>
+
             <section className="share">
-                <div>シェアボタンエリア</div>
-                <Forms url={inputUrl} title={inputTitle}/>
+                <div>シェア</div>
+                <Shares/>
+                <Forms querycheck={query.url&&query.title?true:false} {...propsForInputs}/>
                 {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
             </section>
         </main>

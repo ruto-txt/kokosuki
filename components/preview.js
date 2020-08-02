@@ -33,15 +33,15 @@ function Preview(props){
             (hisArr,index)=>
             <div key={hisArr+index} className="grid-container">
             <MediaQuery query="(min-width:768px)">
-                <div className="main-block">大画面向け表示 {props.funcInquiry(hisArr)}</div>
+                <div className="main-block">{props.funcInquiry(hisArr)}</div>
                 <ArrowBlock funcSwap={(arg)=>{props.funcSwap(arg)}} funcDel={(arg)=>props.funcDel(arg)}
                 index={index} lastLength={history.length-1}/>
             </MediaQuery>
             <MediaQuery query="(max-width:767px)">
                 {isOpen==index+1?
-                    <><div className="main-block mb" onClick={()=>setIsOpen(null)}>スマホ向け表示 open {props.funcInquiry(hisArr)}</div>
+                    <><div className="main-block mb" onClick={()=>setIsOpen(null)}>{props.funcInquiry(hisArr)}</div>
                     <div>{/* グリッドコンテナ用のダミー要素…… */}</div><ArrowBlock funcSwap={(arg)=>{props.funcSwap(arg)}} funcDel={(arg)=>props.funcDel(arg)} index={index} lastLength={history.length-1}/></>:
-                    <div className="main-block mb" onClick={()=>setIsOpen(index+1)}>スマホ向け表示 closed {props.funcInquiry(hisArr)}</div>
+                    <div className="main-block mb" onClick={()=>setIsOpen(index+1)}>{props.funcInquiry(hisArr)}</div>
                 }
             </MediaQuery>
         </div>
@@ -61,8 +61,7 @@ function Preview(props){
                 to { opacity: 1; }
             }
             .main-block{
-                border : 1px solid;
-                background:skyblue;
+                border : 1px solid skyblue;
                 padding:0% 8px;
             }
             .mb{
