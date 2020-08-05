@@ -1,12 +1,15 @@
 import Head from 'next/head'
 import Forms from '../components/forms.js'
 import Panels from '../components/panels.js'
-import React,{useState, useMemo,useCallback, useContext} from 'react'   
+import React,{useState, useMemo,useCallback, useContext} from 'react' 
+import { useRouter } from 'next/router'  
+import Link from 'next/link'
 // import PanelsState from '../components/panels-state.js'
 import Preview from '../components/preview.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter,faLine,faFacebookF } from '@fortawesome/free-brands-svg-icons'
-
+import Modal from 'react-modal'
+import Test from '../components/test'
 
 
 export async function getServerSideProps({query}){
@@ -295,6 +298,8 @@ export default function Home({query}){
                 `}</style>
         </>)},[URL,title,history])
 
+
+    const router = useRouter()
     return (
         <>
         <Head>
@@ -306,6 +311,16 @@ export default function Home({query}){
         </header>
         <main className="grid-container">
             <h2 className="header">{history} / {current}</h2>
+            <Modal isOpen ={!!router.query.tutorial}
+            onRequestClose={()=>{router.push('/')}}
+            closeTimeoutMS={200}
+            // style={customStyle}
+            contentLabel="tutorial modal">
+                <Test></Test>
+            </Modal>
+            <Link href={`/?tutorial=true`} as={`/`}>
+                <a>使い方</a>
+            </Link>
             <section className="preview">
                 {history.length<1?<p>プレビューエリア</p>:
                 <Preview history={history} funcInquiry={(arr)=>inquiryText(arr)}
