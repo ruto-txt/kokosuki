@@ -311,14 +311,14 @@ export default function Home({query}){
         </header>
         <main className="grid-container">
             <h2 className="header">{history} / {current}</h2>
-            <Modal isOpen ={!!router.query.tutorial}
+            <Modal isOpen ={!!router.query.topmodal}
             onRequestClose={()=>{router.push('/')}}
             closeTimeoutMS={200}
             // style={customStyle}
             contentLabel="tutorial modal">
                 <Test></Test>
             </Modal>
-            <Link href={`/?tutorial=true`} as={`/`}>
+            <Link href={`/?topmodal=tutorial`}>
                 <a>使い方</a>
             </Link>
             <section className="preview">

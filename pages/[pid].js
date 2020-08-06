@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router'
 import Test from '../components/test'
 
-const Post = () => {
-  const router = useRouter()
-  const { pid } = router.query
+// const Post = () => {
+//   const router = useRouter()
+//   const {tmp} = router.query
+//   return <Test query={"tutorial"}></Test>
+// }
 
-  return <Test></Test>
-}
-
-export default Post
+// export default Post
