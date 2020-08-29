@@ -3,12 +3,19 @@
 }
 
 main {
-    max-width: 767px;
-    /* min-width: 100%; */
-    margin: auto;
-    border: solid;
-    /* color: */
+  width: 100%;
+  max-width: 767px;
+  margin: auto;
+  border: solid;
+  padding: 3%;
+  /* color: */
 }
+
+@media(min-width: 992px){
+  main {
+        max-width: 1080px;
+    }
+  }
 
 .ReactModal__Overlay {
   opacity: 0;
@@ -35,7 +42,4 @@ main {
   .ReactModal__Content {
     max-width: 50%;
   }
-  main {
-        max-width: 1080px;
-    }
   }

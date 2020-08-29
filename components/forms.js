@@ -167,22 +167,7 @@ const encUrl = `${window.location}?title=${encodeURIComponent(title)}&url=${enco
         `}
         </style>
         </>)
-    // }else{
-    //     return <>
-    //     <div className="button" onClick={()=>setIsOpen(!isOpen)}>　Ξ 詳細入力</div>
-    //     <style jsx>{`
-    //         .button{
-    //             padding:5px;
-    //             border:1px solid skyblue;
-    //             cursor:pointer;
-    //             transition:0.2s;
-    //         }
-    //         .button:hover{
-    //             background:lightblue;
-    //         }
-    //     `}</style>
-    //     </>
-    // }
+
 }
 
     

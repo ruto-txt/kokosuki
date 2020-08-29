@@ -13,6 +13,9 @@ function Preview(props){
         :<button className="arrow-block" onClick={()=>{setIsOpen(null);props.funcSwap(props.index+1)}}>↓</button>}
         <div className="delete-block" onClick={()=>props.funcDel(props.index)}>×</div>
         <style jsx>{`
+        *{
+            cursor:pointer;
+        }
         .arrow-block{
             text-align:center;
             background:pink;

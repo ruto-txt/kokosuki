@@ -39,8 +39,8 @@ export function Panels(props){
             <p>{text}</p>
             <style jsx>{`
                 p{
-                    margin:0.8em 1em;
-                    height:4rem;
+                    margin:0 1em;
+                    height:6em;
                 }
             `}
             </style>
@@ -86,14 +86,13 @@ export function Panels(props){
                 </div>
             )}
         </div>
-        <div><p id="description">{props.children}、ステートテスト：{selected}</p></div>
         <style jsx>{`
             .grid-container{
                 display:grid;
-                margin:5px;
-                grid-template-columns:repeat(3,minmax(100px,1fr));
-                gap:10px;
-                grid-template-rows:minmax(80px,1fr);
+                margin:3% 0;
+                grid-template-columns:repeat(3,minmax(30%,1fr));
+                gap:3%;
+                grid-template-rows:minmax(30%,1fr);
                 align-items:center;
             }
             .grid-container>div{
