@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter,faLine,faFacebookF } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal'
 import Test from '../components/test'
+import Myfooter from '../components/footer';
 
 
 export async function getServerSideProps({query}){
@@ -17,6 +18,21 @@ export async function getServerSideProps({query}){
         props:{query}
     }
 }
+
+const customStyle={
+    content:{
+        position:'relative',
+        top:'10px',
+        left:'0px',
+        right:'0px',
+        bottom:'0px',
+        minHeight:'300px',
+        maxWidth:'992px',
+        margin:'0 auto',
+        transition:'margin-top 4s ease-in-out',
+    }
+}
+
 
 export default function Home({query}){
     const [history,sethistory] = useState([]);
@@ -204,8 +220,8 @@ export default function Home({query}){
         // return category.label + "の" + item.label
     })
     
-    const [URL,setUrl]=useState(()=>query.url?query.url:"https://google.com");
-    const [title,setTitle]=useState(()=>query.title?query.title:"仮のタイトル")
+    const [URL,setUrl]=useState(()=>query.url?query.url:"");
+    const [title,setTitle]=useState(()=>query.title?query.title:"")
     const propsForInputs={
         funcUpdateUrl:(arg)=>setUrl(arg),
         funcUpdateTitle:(arg)=>setTitle(arg),
@@ -245,30 +261,28 @@ export default function Home({query}){
                     document.execCommand('copy')
                     textField.remove()
                     alert(`コピーしました\n\n\"${tmp}\"`)
-                }}>コピー</div>:<div>{/** 空要素 */}</div>}
+                }}>フレーズ</div>:<div>{/** 空要素 */}</div>}
             </div>
             <style jsx>{`
                 #pretext{
                     margin-left:10px;
                     width:80%;
-                    height:6rem;
+                    height:8em;
                     resize:none;
                 }
                 .grid-wrapper{
                     display:grid;
-                    max-width:70%;
+                    max-width:100%;
                     gap:2px;
-                    grid-template-columns:repeat(5,1fr);
+                    grid-template-columns:repeat(6,1fr);
                     justify-items: center;
                 }
                 .btn-social-square {
                     display: inline-block;
                     text-decoration: none;
-                    margin:2px;
+                    margin:3px 0;
                     width:100%;
-                    height: 2rem;
-                    line-height: 2rem;
-                    font-size: 23px;
+                    height: 1em;
                     color:white;
                     border-radius: 10px;
                     text-align: center;
@@ -276,10 +290,12 @@ export default function Home({query}){
                     transition: .3s;
                 }
                 .btn{
-                    font-size:16px;
+                    text-align:center;
                     font-weight:bold;
-                    background: gray;
+                    background:gray;
                     cursor:pointer;
+                    grid-column:5/span 2;
+                    height: 1.5em;
                 }
                 .btn-social-square:hover {
                     -webkit-transform: scale(1.1);
@@ -288,12 +304,18 @@ export default function Home({query}){
                 .tw {
                     background: #22b8ff;
                     grid-column:1/span 2;
+                    font-size: 1.5em;
+                    line-height: 1em;
                 }
                 .fb {
                     background: #6680d8;
+                    font-size: 1.5em;
+                    line-height: 1em;
                 }
                 .ln{
                     background: #1dcd00;
+                    font-size: 1.5em;
+                    line-height: 1em;
                 }
                 `}</style>
         </>)},[URL,title,history])
@@ -309,17 +331,17 @@ export default function Home({query}){
         <header>
             <h1 className="title">ここすきチェッカー</h1>
         </header>
-        <main className="grid-container">
-            <h2 className="header">{history} / {current}</h2>
-            <Modal isOpen ={!!router.query.topmodal}
-            onRequestClose={()=>{router.push('/')}}
+        
+        <Modal isOpen ={!!router.query.topmodal}
+            onRequestClose={()=>{router.replace('/')}}
             closeTimeoutMS={200}
-            // style={customStyle}
+            style={customStyle}
             contentLabel="tutorial modal">
                 <Test></Test>
-            </Modal>
+        </Modal>
+        <main className="grid-container">
             <Link href={`/?topmodal=tutorial`}>
-                <a>使い方</a>
+                <a className="header">使い方</a>
             </Link>
             <section className="preview">
                 {history.length<1?<p>プレビューエリア</p>:
@@ -330,7 +352,7 @@ export default function Home({query}){
 
             <section className="panels">
                 <Panels selected={current} objects={object}
-                onClick={(input,state)=>handleSetSelectState(input,state)}>メインのpanel</Panels>
+                onClick={(input,state)=>handleSetSelectState(input,state)}></Panels>
             </section>
 
             <section className="share">
@@ -340,18 +362,23 @@ export default function Home({query}){
                 {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
             </section>
         </main>
-        <footer>フッター</footer>
+        <Myfooter></Myfooter>
         <style jsx>{`
         .title{
             text-align: center;
         }
+        .header{
+            display: flex;
+            justify-content: center;
+            }
+
         @media(min-width: 992px){
-        .grid-container{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:0px 30px;
-            align-content:space-between;
-        }
+            .grid-container{
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:0 3%;
+                align-content:space-between;
+            }
             .header{
                 grid-column:1/ span 2;
                 justify-self:center;
