@@ -1,7 +1,7 @@
-import Link from 'next/link'
+import MediaQuery from "react-responsive"
 
 const footlist = [
-    {'title':"@ruto",'url':"https://twitter.com/ruto_txt"},
+    {'title':"twitter@ruto",'url':"https://twitter.com/ruto_txt"},
     {'title':"なろう@ruto",'url':"https://mypage.syosetu.com/6527/"},
     {'title':"ノベプラ@ruto",'url':"https://novelup.plus/user/311402567/story"},
     {'title':"カクヨム@ruto",'url':"https://kakuyomu.jp/users/ruto_txt"}
@@ -13,13 +13,55 @@ const pickups=[
 ]
 
 const Myfooter=()=>{
-    return (<><footer>
-        <ul>
-            <li>2020 @ruto</li>
-            {footlist.map(arg=><li><Link rel={arg.url}><a>{arg.title}</a></Link></li>)}
-        </ul>
+    return (<>
+    <hr/>
+    <footer>
+        <div className="wrapper">
+            <ul className="gr2">
+                {footlist.map(arg=><li key={arg.title}><a href={arg.url}>{arg.title}</a></li>)}
+            </ul>
+            <ul>2020 @ruto</ul>
+            <ul className="gr2">
+                <li className="center">Pick Up!</li>
+                <MediaQuery query="(min-width:768px)">
+                    {pickups.map(arg=><li key={arg.title}><a href={arg.url}>{arg.title}</a></li>)}
+                </MediaQuery>
+                <MediaQuery query="(max-width:767px)">
+                    <li key={pickups[0].title}><a href={pickups[0].url}>{pickups[0].title}</a></li>
+                </MediaQuery>
+            </ul>
+        </div>
     </footer>
     <style jsx>{`
+        *{
+            font-size:0.97em;
+        }
+        hr{
+            margin:1em;
+        }
+        .wrapper{
+            display:grid;
+            grid-template-columns:repeat(5,1fr);
+            max-width:992px;
+            margin:0 auto;
+            align-content:space-between;
+        }
+        .gr2{
+            grid-column:span 2;
+            justify-self:center;
+        }
+        a{
+            text-decoration: none;
+        }
+        footer{
+        }
+        ul{
+            list-style:none;
+            padding:0;
+        }
+        .center{
+            text-align:center;
+        }
         `}</style></>)
 }
 

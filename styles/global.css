@@ -1,12 +1,7 @@
-*{
-    box-sizing: border-box;
-}
-
 main {
   width: 100%;
   max-width: 767px;
   margin: auto;
-  border: solid;
   padding: 3%;
   /* color: */
 }
