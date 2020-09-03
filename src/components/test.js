@@ -51,9 +51,9 @@ const LoopDots = (props)=>{
 const ImgSwitch = (props)=>{
     const flag = props.flag
     if(flag>=props.max){return <div>最後の画像はデプロイアドレス取得後でないと無理かな～</div>}
-    if(flag==4){return <img src="../GIF 2020-08-20 22-19-22.gif"></img>}
-    if(flag==3){return <img src="../GIF 2020-08-20 22-06-06.gif"></img>}
-    return <img src="../GIF 2020-08-15 13-33-20.gif"/>
+    if(flag==4){return <img src="../../GIF 2020-08-20 22-19-22.gif"></img>}
+    if(flag==3){return <img src="../../GIF 2020-08-20 22-06-06.gif"></img>}
+    return <img src="../../GIF 2020-08-15 13-33-20.gif"/>
 }
 
 const texts = [
