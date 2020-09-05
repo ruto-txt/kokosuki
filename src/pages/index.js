@@ -339,10 +339,10 @@ export default function Home({query}){
             contentLabel="tutorial modal">
                 <Test></Test>
         </Modal>
+        <Link href={`/?topmodal=tutorial`}>
+            <a className="header">使い方</a>
+        </Link>
         <main className="grid-container">
-            <Link href={`/?topmodal=tutorial`}>
-                <a className="header">使い方</a>
-            </Link>
             <section className="preview">
                 {history.length<1?<p>プレビューエリア</p>:
                 <Preview history={history} funcInquiry={(arr)=>inquiryText(arr)}
@@ -380,7 +380,7 @@ export default function Home({query}){
                 align-content:space-between;
             }
             .header{
-                grid-column:1/ span 2;
+                grid-column:span 2;
                 justify-self:center;
             }
             .preview{
@@ -392,7 +392,7 @@ export default function Home({query}){
                 align-self:start;
             }
             .panels{
-                grid-row:2/ span 2;
+                grid-row:span 2;
                 order:1;
             }
         }

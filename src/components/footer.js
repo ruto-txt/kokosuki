@@ -14,7 +14,6 @@ const pickups=[
 
 const Myfooter=()=>{
     return (<>
-    <hr/>
     <footer>
         <div className="wrapper">
             <ul className="gr2">
@@ -35,9 +34,6 @@ const Myfooter=()=>{
     <style jsx>{`
         *{
             font-size:0.97em;
-        }
-        hr{
-            margin:1em;
         }
         .wrapper{
             display:grid;
