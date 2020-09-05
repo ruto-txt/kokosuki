@@ -3,6 +3,7 @@ main {
   max-width: 767px;
   margin: auto;
   padding: 3%;
+  border:solid 1px gray;
   /* color: */
 }
 

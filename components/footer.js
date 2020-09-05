@@ -14,7 +14,6 @@ const pickups=[
 
 const Myfooter=()=>{
     return (<>
-    <hr/>
     <footer>
         <div className="wrapper">
             <ul className="gr2">
