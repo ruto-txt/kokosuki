@@ -11,6 +11,7 @@ import { faTwitter,faLine,faFacebookF } from '@fortawesome/free-brands-svg-icons
 import Modal from 'react-modal'
 import Test from '../components/test'
 import Myfooter from '../components/footer';
+import MyHead from '../components/header';
 
 
 export async function getServerSideProps({query}){
@@ -325,8 +326,7 @@ export default function Home({query}){
     return (
         <>
         <Head>
-            <title>ここすきチェッカー</title>
-            <link rel="icon" href="/favicon.ico" />
+            <MyHead/>
         </Head>
         <header>
             <h1 className="title">ここすきチェッカー</h1>

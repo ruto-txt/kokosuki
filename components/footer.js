@@ -8,7 +8,7 @@ const footlist = [
     {'title':"カクヨム@ruto",'url':"https://kakuyomu.jp/users/ruto_txt"}
 ]
 const pickups=[
-    {'title':"ぎゃくさつ！　～JKのどきどき紛争傭兵ライフ～",'url':"https://syosetu.com/usernovelmanage/top/ncode/1239969/"},
+    {'title':"ぎゃくさつ！　～JKのどきどき紛争傭兵ライフ～",'url':"https://ncode.syosetu.com/n0093eu/"},
     {'title':"ベス",'url':"https://ncode.syosetu.com/n3513dy/"}
 ]
 
