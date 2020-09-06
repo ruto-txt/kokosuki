@@ -76,8 +76,9 @@ const Forms=(props)=>{
     )
 
     const generateURLObj=useCallback((title,url)=>{
-//仮のもの！！
-const encUrl = `${window.location}?title=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+        //TODO::URLをどっか見えやすい外側に置きたいところ
+        const deployURL="https://kokosuki.vercel.app/";
+        const encUrl = `${deployURL}?title=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
         const htmltag = `<a href=${encUrl}>${title}</a>`
         return {encUrl,htmltag}
     })
