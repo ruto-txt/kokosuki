@@ -85,13 +85,13 @@ const Forms=(props)=>{
 
     return (<>
         <div key="form" className={isOpen?"grid-container":"grid-container is-hidden"}>
-        <label htmlFor="title">title:</label>
-        <input type="text" id="title" key="title" placeholder="タイトル" value={props.title}
-            onChange={e=>props.funcUpdateTitle(e.target.value)}/>
+            <label htmlFor="title">title:</label>
+            <input type="text" id="title" key="title" placeholder="タイトル" value={props.title}
+                onChange={e=>props.funcUpdateTitle(e.target.value)}/>
 
-        <label htmlFor="url">url:</label>
-        <input type="url" id="url" key="url" placeholder="URL" value={props.url}
-            onChange={e=>props.funcUpdateUrl(e.target.value)}/>
+            <label htmlFor="url">url:</label>
+            <input type="url" id="url" key="url" placeholder="URL" value={props.url}
+                onChange={e=>props.funcUpdateUrl(e.target.value)}/>
         </div>
         <div className="grid-button-wrapper">
             <button type="button" className="button" onClick={()=>setIsOpen(!isOpen)}>{isOpen?"閉じる":"Ξ　情報入力"}</button>
@@ -111,6 +111,7 @@ const Forms=(props)=>{
                 display:grid;
                 padding:10px 0px;
                 gap:10px 0px;
+                margin:1% 1% 0% 1%;
                 grid-template-columns:50px 100px 1fr;
                 align-items:center;
                 border:1px solid skyblue;
@@ -143,6 +144,7 @@ const Forms=(props)=>{
             .grid-button-wrapper{
                 display:grid;
                 gap:10px 0px;
+                margin:0 1% 2% 1%;
                 grid-template-columns:100px 1fr 200px;
                 align-items:center;
                 transition:300ms;

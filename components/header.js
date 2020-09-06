@@ -1,6 +1,5 @@
 const MyHead =()=>(
     <>
-        <title>ここすきチェッカー</title>
         <link rel="icon" href="/favicon.ico" key="index"/>
         <meta name="description" content="小説や漫画などの感想文を作成する支援ツールです"/>
         <meta charSet="utf-8"/>

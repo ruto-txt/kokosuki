@@ -1,8 +1,7 @@
 main {
   width: 100%;
   max-width: 767px;
-  margin: auto;
-  padding: 3%;
+  margin:auto;
   border:solid 1px lightgray;
   /* color: */
 }

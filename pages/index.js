@@ -326,10 +326,11 @@ export default function Home({query}){
     return (
         <>
         <Head>
+            <title>ここすきチェッカー(β)</title>
             <MyHead/>
         </Head>
         <header>
-            <h1 className="title">ここすきチェッカー</h1>
+            <h1 className="title">ここすきチェッカー（β）</h1>
         </header>
         
         <Modal isOpen ={!!router.query.topmodal}
@@ -339,9 +340,11 @@ export default function Home({query}){
             contentLabel="tutorial modal">
                 <Test></Test>
         </Modal>
-        <Link href={`/?topmodal=tutorial`}>
-            <a className="header">使い方</a>
-        </Link>
+        <div className="header">
+            <Link href={`/?topmodal=tutorial`}>
+                <a>使い方</a>
+            </Link>
+        </div>
         <main className="grid-container">
             <section className="preview">
                 {history.length<1?<p>プレビューエリア</p>:
@@ -377,6 +380,7 @@ export default function Home({query}){
                 display:grid;
                 grid-template-columns:1fr 1fr;
                 gap:0 3%;
+                padding:2%;
                 align-content:space-between;
             }
             .header{
