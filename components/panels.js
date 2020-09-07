@@ -89,10 +89,10 @@ export function Panels(props){
         <style jsx>{`
             .grid-container{
                 display:grid;
-                margin:1%;
+                margin:0 3px;
                 grid-template-columns:repeat(3,minmax(30%,1fr));
-                gap:3%;
                 grid-template-rows:minmax(30%,1fr);
+                gap:3%;
                 align-items:center;
             }
             .grid-container>div{
