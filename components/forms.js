@@ -119,7 +119,7 @@ const Forms=(props)=>{
             }
             .grid-container>:global(*) {
                 margin:0px 20px;
-                grid-column:0;
+                grid-column:span 1;
             }
 
             .grid-container.is-hidden{

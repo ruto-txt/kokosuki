@@ -379,7 +379,7 @@ export default function Home({query}){
             .grid-container{
                 display:grid;
                 grid-template-columns:1fr 1fr;
-                gap:0 3%;
+                gap:0 3em;
                 padding:2%;
                 align-content:space-between;
             }

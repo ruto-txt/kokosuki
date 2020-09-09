@@ -89,28 +89,31 @@ export function Panels(props){
         <style jsx>{`
             .grid-container{
                 display:grid;
+                grid-template-columns:repeat(3,1fr);
+                grid-template-rows:repeat(3,1fr);
+                gap:1em;
                 margin:0 3px;
-                grid-template-columns:repeat(3,minmax(30%,1fr));
-                grid-template-rows:minmax(30%,1fr);
-                gap:3%;
-                align-items:center;
             }
             .grid-container>div{
-                text-align:center;
-                padding-bottom:90%;
                 border-radius: 10px;
-                position: relative;
+                position:relative;
                 cursor:pointer;
             }
+            .grid-container>div::before{
+                display:block;
+                content:"";
+                padding-top:100%;
+                align-items:center;
+            }
             .grid-container>div>span{
-            /* height: 100px; */
-            position: absolute;
-            white-space: nowrap;
-            top: 50%;
-            left: 50%;
-            -webkit-transform : translate(-50%,-50%);
-            transform : translate(-50%,-50%);
-        }
+                position:absolute;
+                top:0;
+                left:0;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                white-space: nowrap;
+            }
 
             .reception{
                 background:skyblue;
