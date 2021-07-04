@@ -7,7 +7,7 @@ import Link from 'next/link'
 // import PanelsState from '../components/panels-state.js'
 import Preview from '../components/preview.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter,faLine,faFacebookF } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter,faLine,faFacebook } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal'
 import Test from '../components/test'
 import Myfooter from '../components/footer';
@@ -242,17 +242,17 @@ export default function Home({query}){
     const Shares=useCallback(()=>{
         const _URL = useMemo(()=>encodeURIComponent(URL))
         const tmp = history.map(arg=>inquiryText(arg)).join("\n");
-        const pretext =`${tmp}\n\n${title}\n${URL}`
+        const pretext =`${tmp}\n\n${title}\n`
         const text = encodeURIComponent(pretext)
 
         return (<>
             <textarea id="pretext" readOnly value={pretext} onClick={()=>writeToClipboard("pretext")}/><small>{pretext.length}文字</small>
             <div className="grid-wrapper">
-                <a id="tweetbutton" href={`https://twitter.com/share?url=${_URL}&text=${text}`} target="_blank"
+                <a id="tweetbutton" href={`https://twitter.com/share?url=${_URL}&text=${text}&hashtags=${"ここすきチェッカー"}`} target="_blank"
                     className="btn-social-square tw"><FontAwesomeIcon icon={faTwitter}/></a>
                 <a href={`https://www.facebook.com/share.php?u=${_URL}`} target="_blank"
-                    className="btn-social-square fb"><FontAwesomeIcon icon={faFacebookF}/></a>
-                <a href={`https://social-plugins.line.me/lineit/share?url=${_URL}`} target="_blank"
+                    className="btn-social-square fb"><FontAwesomeIcon icon={faFacebook}/></a>
+                <a href={`https://line.me/R/msg/text/?${text}${_URL}`} target="_blank"
                     className="btn-social-square ln"><FontAwesomeIcon icon={faLine}/></a>
                 {history.length!=0?<div className="btn-social-square btn" onClick={()=>{
                     var textField = document.createElement('textarea')
@@ -274,14 +274,14 @@ export default function Home({query}){
                 .grid-wrapper{
                     display:grid;
                     max-width:100%;
-                    gap:2px;
+                    gap:0.3em;
                     grid-template-columns:repeat(6,1fr);
                     justify-items: center;
+                    align-items:center;
                 }
                 .btn-social-square {
                     display: inline-block;
                     text-decoration: none;
-                    margin:3px 0;
                     width:100%;
                     height: 1em;
                     color:white;
@@ -296,7 +296,8 @@ export default function Home({query}){
                     background:gray;
                     cursor:pointer;
                     grid-column:5/span 2;
-                    height: 1.5em;
+                    height: calc(1.5*1.8em);
+                    line-height: calc(1.5*1.8em);
                 }
                 .btn-social-square:hover {
                     -webkit-transform: scale(1.1);
@@ -305,18 +306,21 @@ export default function Home({query}){
                 .tw {
                     background: #22b8ff;
                     grid-column:1/span 2;
+                    height:1.8em;
                     font-size: 1.5em;
-                    line-height: 1em;
+                    line-height: 1.9em;
                 }
                 .fb {
                     background: #6680d8;
+                    height:1.8em;
                     font-size: 1.5em;
-                    line-height: 1em;
+                    line-height: 1.9em;
                 }
                 .ln{
                     background: #1dcd00;
+                    height:1.8em;
                     font-size: 1.5em;
-                    line-height: 1em;
+                    line-height: 1.9em;
                 }
                 `}</style>
         </>)},[URL,title,history])
@@ -360,7 +364,7 @@ export default function Home({query}){
 
             <section className="share">
                 <div>シェア</div>
-                <Shares/>
+                <Shares src_url={URL} src_title={title} phrase={history.map(arg=>inquiryText(arg)).join("\n")}/>
                 <Forms querycheck={query.url&&query.title?true:false} {...propsForInputs}/>
                 {/* <Link href="/damii"><a>＞ダミーリンク＜</a></Link> */}
             </section>

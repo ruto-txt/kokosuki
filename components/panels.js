@@ -62,7 +62,7 @@ export function Panels(props){
 
             //細目選択中ならちょっと文字を変える
             return key==selected[1]?
-            <span>{itemLabel} <br/>を選択</span>:<span>{itemLabel}</span>
+            <span>{itemLabel} <br/>確定</span>:<span>{itemLabel}</span>
         }
     })
 

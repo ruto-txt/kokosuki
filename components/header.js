@@ -7,7 +7,7 @@ const MyHead =()=>(
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="ここすきチェッカー 感想支援ツール"/>{/** こっちは個別ページのタイトル */}
         <meta property="og:site_name" content="ここすきチェッカー 感想支援ツール"/>
-        <meta property="og:description" content="小説や漫画などの感想文を作成する支援ツールです"/>
+        <meta property="og:description" content="あなただけの感想を探してみませんか？"/>
         <meta property="og:image" content="/ogimage.png.png"/>
         <meta name="twitter:card" content="summary"/>
         <meta name="twitter:site" content="@ruto_txt"/>

@@ -16,9 +16,9 @@ const Myfooter=()=>{
     const Adresses = ()=>useCallback(footlist.map(arg=><li key={arg.title}><a href={arg.url}>{arg.title}</a></li>))
     const PickupsMemo =()=>useCallback(
         <>
-        <li><a href="https://novelup.plus/story/759889834">神に呪われた異世界転生　――魔術師は剣で無双する</a></li>
+        <li><a href="https://novelup.plus/story/759889834" target="_blank">神に呪われた異世界転生　――魔術師は剣で無双する</a></li>
         <MediaQuery query="(min-width:768px)">
-            {pickups.map(arg=><li key={arg.title}><a href={arg.url}>{arg.title}</a></li>)}
+            {pickups.map(arg=><li key={arg.title}><a href={arg.url} target="_blank">{arg.title}</a></li>)}
         </MediaQuery>
         </>)
 
